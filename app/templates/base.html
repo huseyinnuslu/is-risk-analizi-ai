@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }} | İŞTRisk AI</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <link rel="stylesheet" href="/static/bonus.css?v=1">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="/"><span class="brand-mark">R</span>İŞTRisk <strong>AI</strong></a>
+      <p class="caption">Yerel karar destek sistemi</p>
+      <nav>
+        <a class="nav-link {% if current_page == 'dashboard' %}active{% endif %}" href="/">Genel Bakış</a>
+        <a class="nav-link {% if current_page in ['processes','process_detail'] %}active{% endif %}" href="/processes">Riskli İşler</a>
+        <a class="nav-link {% if current_page == 'models' %}active{% endif %}" href="/models">Model Performansı</a>
+        <a class="nav-link {% if current_page == 'data_quality' %}active{% endif %}" href="/data-quality">Veri Kalitesi</a>
+        <a class="nav-link {% if current_page == 'imports' %}active{% endif %}" href="/imports">Veri İçe Aktarma</a>
+        <a class="nav-link {% if current_page == 'system_health' %}active{% endif %}" href="/system-health">Sistem Sağlığı</a>
+      </nav>
+      <p class="local-note">Veriler yalnızca bu bilgisayarda işlenir.</p>
+    </aside>
+    <main class="main-content">
+      <header class="topbar"><div><p class="eyebrow">AI DESTEKLİ İŞ SÜRECİ YÖNETİMİ</p><h1>{{ title }}</h1></div><span class="local-badge">Yerel çalışma</span></header>
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="/static/app.js?v=13"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

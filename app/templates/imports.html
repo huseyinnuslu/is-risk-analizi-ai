@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="columns import-columns">
+  <article class="panel">
+    <p class="eyebrow">YEREL DOSYA</p>
+    <h2>CSV veya Excel yükle</h2>
+    <p class="empty">Dosya bu bilgisayarda doğrulanır ve yalnızca yerel SQLite veritabanına aktarılır. Buluta gönderilmez.</p>
+    <form id="import-form" class="upload-form">
+      <label>Dosya seç (.csv veya .xlsx)<input id="import-file" name="file" type="file" accept=".csv,.xlsx" required></label>
+      <button class="primary" type="submit">Doğrula ve içe aktar</button>
+    </form>
+    <p id="import-message" class="empty"></p>
+  </article>
+  <article class="panel">
+    <p class="eyebrow">BEKLENEN ŞEMA</p>
+    <h2>Gerekli sütunlar</h2>
+    <p class="empty">external_id, process_type, current_stage, responsible_team, priority, created_at, as_of_date, deadline, completed_at, status ve sayısal süreç alanları.</p>
+    <p class="empty">Hatalı satırlar aktarılmaz; sonuçta geçerli ve reddedilen satır sayısını görürsün. Aynı external_id tekrar yüklenirse kayıt güncellenir.</p>
+  </article>
+</section>
+<section class="panel" id="import-report" hidden></section>
+{% endblock %}
+{% block scripts %}<script src="/static/imports.js"></script><script>window.pageImport();</script>{% endblock %}

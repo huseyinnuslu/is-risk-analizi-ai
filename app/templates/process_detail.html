@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="panel"><p class="eyebrow">OPERASYONEL DESTEK</p><h2>İncelenebilecek aksiyonlar</h2><p class="empty">Öneriler süreç alanlarından üretilir; otomatik karar veya zorunlu işlem değildir.</p><div id="recommended-actions" class="list"><p class="empty">Tahmin sonrasında gösterilir.</p></div></section>
+<div id="process-detail" data-process-id="{{ process_id }}">
+  <section class="columns detail-columns">
+    <article class="panel">
+      <p class="eyebrow">SÜREÇ BİLGİSİ</p>
+      <h2 id="detail-name">Yükleniyor…</h2>
+      <dl id="process-fields" class="definition-list"></dl>
+    </article>
+    <article class="panel">
+      <p class="eyebrow">GÜNCEL TAHMİN</p>
+      <div id="deadline-alert" class="empty"></div>
+      <div id="prediction-result" class="empty">Bu iş için henüz tahmin üretilmedi.</div>
+      <button id="run-prediction" class="primary">Tahmin üret</button>
+      <p id="prediction-note" class="empty"></p>
+    </article>
+  </section>
+
+  <section class="columns">
+    <article class="panel">
+      <p class="eyebrow">AÇIKLAMA</p>
+      <h2>Riski etkileyen faktörler</h2>
+      <p class="empty">Etkiler, ilgili alan iyileştirildiğinde modelin gecikme olasılığında oluşan değişimdir; puanlar toplanmaz ve kesin neden kanıtı değildir.</p>
+      <div id="risk-factors" class="list"><p class="empty">Tahmin sonrasında gösterilir.</p></div>
+    </article>
+    <article class="panel">
+      <p class="eyebrow">WHAT-IF</p>
+      <h2>Karşı-senaryo simülasyonu</h2>
+      <p class="empty">Mevcut süreç alanları farklı olsaydı modelin tahmini nasıl değişirdi? Bu, açıklanabilir bir karar destek karşılaştırmasıdır; kesin karar veya nedensellik kanıtı değildir.</p>
+      <form id="simulation-form" class="form-grid">
+        <label>Eksik belge<input type="number" min="0" name="missing_document_count"></label>
+        <label>Revizyon<input type="number" min="0" name="revision_count"></label>
+        <label>Bu aşamada geçirilen gün<input type="number" min="0" name="days_in_current_stage"></label>
+        <button class="secondary" type="submit">Senaryoyu hesapla</button>
+      </form>
+      <p class="empty">Bu alan kalan süre değildir. <strong>0</strong> girmek, işin bugün biteceği değil; bu aşamaya hiç beklemeden geldiği varsayımıdır.</p>
+      <div id="simulation-result"></div>
+    </article>
+  </section>
+
+  <section class="panel">
+    <p class="eyebrow">TARİHSEL BAĞLAM</p>
+    <h2>Benzer tamamlanmış işler</h2>
+    <p class="empty">Aynı iş türünde, tahmin tarihinden önce tamamlanmış yakın kayıtlar. Bu liste modelin kesin karar verdiği anlamına gelmez.</p>
+    <div class="table-wrap"><table><thead><tr><th>İş</th><th>Aşama</th><th>Ekip</th><th>Tamamlandı</th><th>Gerçek süre</th><th>Sonuç</th></tr></thead><tbody id="similar-processes"><tr><td colspan="6" class="empty">Yükleniyor…</td></tr></tbody></table></div>
+  </section>
+
+  <section class="panel">
+    <p class="eyebrow">TAHMİN GEÇMİŞİ</p>
+    <h2>Bu iş için üretilen tahminler</h2>
+    <p class="empty">Her satır, tahminin üretildiği anda kullanılan aktif modelin kaydıdır. Yeni tahmin eski tahmini silmez.</p>
+    <div class="table-wrap"><table><thead><tr><th>Tahmin tarihi</th><th>Model sürümü</th><th>Risk</th><th>Tahmini kalan süre</th></tr></thead><tbody id="prediction-history"><tr><td colspan="4" class="empty">Yükleniyor…</td></tr></tbody></table></div>
+  </section>
+
+  <section class="panel">
+    <p class="eyebrow">GERİ BİLDİRİM</p>
+    <h2>Tahmini değerlendir</h2>
+    <p class="empty">Bu geri bildirim yerel veritabanında saklanır. Modeli doğrudan değiştirmez; sonraki değerlendirme ve yeniden eğitimde kullanılabilecek kayıt oluşturur.</p>
+    <form id="feedback-form" class="form-grid">
+      <label>Değerlendirme
+        <select name="feedback_type" required>
+          <option value="useful">Faydalı buldum</option>
+          <option value="not_useful">Faydalı bulmadım</option>
+          <option value="incorrect">Tahmin hatalı görünüyor</option>
+          <option value="other">Diğer</option>
+        </select>
+      </label>
+      <label>Gerçek sonuç (iş tamamlandıysa)
+        <select name="actual_outcome"><option value="">Henüz bilinmiyor</option><option value="0">Zamanında tamamlandı</option><option value="1">Gecikerek tamamlandı</option></select>
+      </label>
+      <label>Not (isteğe bağlı)<input type="text" name="comment" maxlength="1000" placeholder="Kısa gözleminiz"></label>
+      <button class="secondary" type="submit">Geri bildirimi kaydet</button>
+    </form>
+    <div id="feedback-result" class="empty"></div>
+  </section>
+</div>
+{% endblock %}
+{% block scripts %}<script src="/static/process_detail_extras.js"></script><script>window.pageProcessDetail && window.pageProcessDetail();</script>{% endblock %}

@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="panel"><div class="panel-head"><div><p class="eyebrow">YEREL İZLEME</p><h2>Bilgisayar sağlığı</h2><p class="empty">CPU ve bellek anlık kullanım, disk ise C: depolama doluluğu olarak ölçülür. NVIDIA ayrık GPU varsa ayrıca gösterilir. Kritik eşikler yerel uyarı geçmişine kaydedilir.</p></div><button id="health-check" class="primary" type="button">Şimdi kontrol et</button></div><p id="health-status" class="empty">Yükleniyor…</p></section>
+<section id="health-metrics" class="metric-grid health-grid"></section>
+<section class="panel"><p class="eyebrow">UYARI GEÇMİŞİ</p><h2>Son ölçümler</h2><p class="empty">Bu kayıtlar yerel SQLite veritabanında tutulur. Disk sütunu C: depolama doluluğunu gösterir; Görev Yöneticisi’ndeki anlık disk I/O yüzdesi değildir. Bilgisayar tamamen kapanırsa aynı bilgisayardaki izleyici de çalışmayı durdurur.</p><div class="table-wrap"><table><thead><tr><th>Zaman</th><th>Durum</th><th>CPU</th><th>RAM</th><th>C: doluluk</th><th>Uyarı</th></tr></thead><tbody id="health-history"><tr><td colspan="6" class="empty">Yükleniyor…</td></tr></tbody></table></div></section>
+{% endblock %}
+{% block scripts %}<script>window.pageSystemHealth && window.pageSystemHealth();</script>{% endblock %}

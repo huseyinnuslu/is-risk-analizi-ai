@@ -1,0 +1,31 @@
+# Yerel ve hassas çalışma çıktıları
+.venv*/
+.env
+__pycache__/
+.pytest_cache/
+*.py[cod]
+.vscode/
+
+# Gerçek veya üretilmiş çalışma verileri ve model çıktıları
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+data/*.db
+ml/artifacts/*
+!ml/artifacts/.gitkeep
+reports/generated/*
+!reports/generated/.gitkeep
+logs/*
+!logs/.gitkeep
+
+# Yerel doküman inceleme çıktıları
+.doc_review/
+tmp/
+
+# Kişisel staj/teslim dosyaları ve türetilmiş sunum çıktıları
+reports/SOFT_Staj_Defteri_2_Proje_13_Is_Gunu.docx
+reports/final_presentation/
+
+# Yanlışlıkla oluşmuş yerel boş dosya
+=

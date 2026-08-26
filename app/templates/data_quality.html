@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="metric-grid"><article><span>Kaynak kayıt</span><strong id="source-rows">—</strong></article><article><span>Geçerli kayıt</span><strong id="valid-rows">—</strong></article><article><span>Reddedilen</span><strong id="rejected-rows">—</strong></article><article><span>Tekrar kayıt</span><strong id="duplicate-rows">—</strong></article></section>
+<section class="columns"><article class="panel"><p class="eyebrow">EKSİK DEĞERLER</p><p class="empty">Not: <code>completed_at</code> alanının açık işlerde boş olması beklenir; bu kayıtlar hata sayılmaz.</p><div id="missing-values" class="list"></div></article><article class="panel"><p class="eyebrow">AYKIRI DEĞER RAPORU</p><p class="empty">Aykırı değerler silinmez; inceleme için raporlanır. Aykırı değer, tek başına hatalı kayıt demek değildir.</p><div id="outliers" class="list"></div></article></section>
+<section class="panel"><p class="eyebrow">RED NEDENLERİ</p><h2>İçe aktarmada yakalanan veri hataları</h2><p class="empty">Bir kayıt birden fazla nedenden reddedilebilir. Bu özet, kaynağı düzeltmek için hangi kalite problemlerinin öne çıktığını gösterir.</p><div id="rejection-reasons" class="list"></div></section>
+{% endblock %}
+{% block scripts %}<script>window.pageQuality();</script>{% endblock %}

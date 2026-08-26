@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<form class="filters" method="get" action="/processes">
+  <label>Takvim durumu
+    <select name="deadline_status">
+      <option value="actionable" {% if selected_deadline == 'actionable' %}selected{% endif %}>Aksiyon bekleyen (varsayılan)</option>
+      <option value="urgent" {% if selected_deadline == 'urgent' %}selected{% endif %}>Acil (0–1 gün)</option>
+      <option value="within_deadline" {% if selected_deadline == 'within_deadline' %}selected{% endif %}>Plan dahilinde</option>
+      <option value="overdue" {% if selected_deadline == 'overdue' %}selected{% endif %}>Gecikmiş</option>
+      <option value="all" {% if selected_deadline == 'all' %}selected{% endif %}>Tümü</option>
+    </select>
+  </label>
+  <label>Model riski
+    <select name="risk_level"><option value="">Tümü</option><option value="Yüksek" {% if selected_risk == 'Yüksek' %}selected{% endif %}>Yüksek</option><option value="Orta" {% if selected_risk == 'Orta' %}selected{% endif %}>Orta</option><option value="Düşük" {% if selected_risk == 'Düşük' %}selected{% endif %}>Düşük</option></select>
+  </label>
+  <label>Süreç türü
+    <select name="process_type"><option value="">Tümü</option>{% for value in filter_options.process_type %}<option value="{{ value }}" {% if selected_process_type == value %}selected{% endif %}>{{ value }}</option>{% endfor %}</select>
+  </label>
+  <label>Aşama
+    <select name="current_stage"><option value="">Tümü</option>{% for value in filter_options.current_stage %}<option value="{{ value }}" {% if selected_stage == value %}selected{% endif %}>{{ value }}</option>{% endfor %}</select>
+  </label>
+  <label>Ekip
+    <select name="responsible_team"><option value="">Tümü</option>{% for value in filter_options.responsible_team %}<option value="{{ value }}" {% if selected_team == value %}selected{% endif %}>{{ value }}</option>{% endfor %}</select>
+  </label>
+  <button class="secondary" type="submit">Listeyi yenile</button>
+</form>
+<p class="export-link"><a class="secondary" href="/api/processes/export.csv?{{ request.url.query }}">CSV indir</a></p>
+<section class="panel"><div class="panel-head"><div><p class="eyebrow">AÇIK KAYITLAR</p><h2>İş öncelik listesi</h2><p class="empty">Varsayılan görünüm gecikmemiş işleri gösterir; acil işler önce, sonra model riski yüksek işler gelir. Takvim durumu kesin kuraldır; model riski gecikme olasılığı tahminidir.</p></div><span>{{ processes|length }} kayıt</span></div><div class="table-wrap"><table><thead><tr><th>ID</th><th>Süreç türü</th><th>Aşama</th><th>Ekip</th><th>Öncelik</th><th>Son tarih</th><th>Tahmini bitiş</th><th>Takvim durumu</th><th>Model riski</th><th></th></tr></thead><tbody>{% for item in processes %}<tr><td>{{ item.external_id }}</td><td>{{ item.process_type }}</td><td>{{ item.current_stage }}</td><td>{{ item.responsible_team }}</td><td>{{ item.priority }}</td><td>{{ item.deadline }}</td><td>{{ item.predicted_completion_date or 'Tahmin yok' }}</td><td>{% if item.deadline_status == 'overdue' %}<span class="badge risk-high">Gecikmiş · {{ item.deadline_days_remaining|abs }} gün</span>{% elif item.deadline_status == 'urgent' %}<span class="badge risk-medium">Acil · {{ item.deadline_days_remaining }} gün</span>{% else %}<span class="badge risk-low">Plan dahilinde · {{ item.deadline_days_remaining }} gün</span>{% endif %}</td><td>{% if item.risk_score is not none %}<span class="badge risk-{{ 'high' if item.risk_level == 'Yüksek' else 'medium' if item.risk_level == 'Orta' else 'low' }}">{{ item.risk_score }} · {{ item.risk_level }}</span>{% else %}Tahmin yok{% endif %}</td><td><a href="/processes/{{ item.id }}">İncele</a></td></tr>{% else %}<tr><td colspan="10" class="empty">Bu filtrelerle kayıt bulunamadı.</td></tr>{% endfor %}</tbody></table></div></section>
+{% endblock %}

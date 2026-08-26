@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="panel"><p class="eyebrow">VERİ DAĞILIMI</p><h2>Drift uyarısı</h2><p class="empty">Açık işlerin alan dağılımı, eğitim bağlamındaki tamamlanmış işlerle karşılaştırılır. Bu uyarı tek başına model hatası veya yeniden eğitim kararı değildir.</p><div id="drift-report" class="list"><p class="empty">Yükleniyor…</p></div></section>
+<section class="panel"><p class="eyebrow">AKTİF MODELLER</p><h2>Model performansı</h2><div id="models-grid" class="model-grid"></div></section>
+<section class="panel"><p class="eyebrow">SINIFLANDIRMA KONTROLÜ</p><h2>Confusion matrix</h2><p class="empty">Test verisinde modelin gecikme kararları. Satırlar gerçek sonucu, sütunlar model tahminini gösterir.</p><div id="confusion-matrix" class="table-wrap"></div></section>
+<section class="panel"><p class="eyebrow">İZLEME</p><h2>Geri bildirim özeti</h2><p class="empty">Bu sayılar kullanıcı değerlendirmeleridir; eğitim/test metriği değildir. Yeterli gerçek sonuç biriktiğinde modelin yeniden değerlendirilmesinde kullanılır.</p><div id="monitoring-grid" class="metric-grid"></div></section>
+<section class="panel"><p class="eyebrow">SAHA PERFORMANSI</p><h2>Gerçekleşen sonuçlarla yeniden ölçüm</h2><p class="empty">Yalnız gerçek sonucu girilmiş tahminler kullanılır. Sınıflandırma eşiği 0,50 gecikme olasılığıdır; örnek sayısı azsa bu metrikle model değiştirilmez.</p><div id="field-performance" class="list"></div></section>
+<section class="panel note"><p>Bu sonuçlar sentetik veri üzerindeki test metrikleridir. Sistem erken uyarıdır; kesin operasyonel karar değildir.</p></section>
+{% endblock %}
+{% block scripts %}<script>window.pageModels();</script>{% endblock %}

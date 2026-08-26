@@ -1,0 +1,14 @@
+fastapi
+uvicorn[standard]
+pandas
+numpy
+scikit-learn
+joblib
+openpyxl
+python-dotenv
+jinja2
+python-multipart
+pytest
+httpx
+matplotlib
+psutil
